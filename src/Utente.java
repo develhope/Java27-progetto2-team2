@@ -2,15 +2,59 @@ public class Utente {
 
     private String nome;
     private String cognome;
-    private String idOppurePassword; // ID o password per avere utente univoco
+    private String id;
+    private String password; // ID o password per avere utente univoco
     private Carrello carrelloUtente; // Carrello associato all'utente
 
     // Costruttore
-    public Utente(String nome, String cognome, String idOppurePassword, Magazzino magazzino) {
+    public Utente(String nome, String cognome, String id, String password, Magazzino magazzino) {
         this.nome = nome;
         this.cognome = cognome;
-        this.idOppurePassword = idOppurePassword;
+        this.id = id;
+        this.password = password;
         this.carrelloUtente = new Carrello(magazzino); // Passo il magazzino al carrello
+    }
+
+
+    // Getters e Setters -------------------------------------------------------------
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Carrello getCarrelloUtente() {
+        return carrelloUtente;
+    }
+
+    public void setCarrelloUtente(Carrello carrelloUtente) {
+        this.carrelloUtente = carrelloUtente;
     }
 
     // Metodi per la gestione del carrello -------------------------------------------------------------
@@ -38,51 +82,5 @@ public class Utente {
     public void finalizzaAcquisto() {
         carrelloUtente.svuotaCarrello();
         System.out.println("Acquisto finalizzato con successo! Grazie " + nome + " " + cognome + ".");
-    }
-
-    // Metodi di ricerca nel magazzino (non dovrebbe stare in Magazzino?)-------------------------
-    // Metodo per la ricerca per tipo di dispositivo
-    public void ricercaPerTipo(String tipo, Magazzino magazzino) {
-        for (Prodotto prodotto : magazzino.getProdotti()) {
-            if (prodotto.getTipoProdotto().equalsIgnoreCase(tipo)) {
-                System.out.println(prodotto);
-            }
-        }
-    }
-
-    // Metodo per la ricerca per produttore
-    public void ricercaPerProduttore(String produttore, Magazzino magazzino) {
-        for (Prodotto prodotto : magazzino.getProdotti()) {
-            if (prodotto.getProduttore().equalsIgnoreCase(produttore)) {
-                System.out.println(prodotto);
-            }
-        }
-    }
-
-    // Metodo per la ricerca per modello
-    public void ricercaPerModello(String modello, Magazzino magazzino) {
-        for (Prodotto prodotto : magazzino.getProdotti()) {
-            if (prodotto.getModello().equalsIgnoreCase(modello)) {
-                System.out.println(prodotto);
-            }
-        }
-    }
-
-    // Metodo per la ricerca per prezzo di vendita
-    public void ricercaPerPrezzoVendita(double prezzoMinimo, double prezzoMassimo, Magazzino magazzino) {
-        for (Prodotto prodotto : magazzino.getProdotti()) {
-            if (prodotto.getPrezzoVendita() >= prezzoMinimo && prodotto.getPrezzoVendita() <= prezzoMassimo) {
-                System.out.println(prodotto);
-            }
-        }
-    }
-
-    // Metodo per la ricerca per prezzo di acquisto
-    public void ricercaPerPrezzoAcquisto(double prezzoMinimo, double prezzoMassimo, Magazzino magazzino) {
-        for (Prodotto prodotto : magazzino.getProdotti()) {
-            if (prodotto.getPrezzoAcquisto() >= prezzoMinimo && prodotto.getPrezzoAcquisto() <= prezzoMassimo) {
-                System.out.println(prodotto);
-            }
-        }
     }
 }

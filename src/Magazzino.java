@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Magazzino {
 
@@ -9,18 +8,14 @@ public class Magazzino {
         this.listaProdotti = new ArrayList<>();
     }
 
-    public void aggiungiProdotto(Prodotto prodotto){
+    public List<Prodotto> aggiungiProdotto(Prodotto prodotto){
         listaProdotti.add(prodotto);
-        System.out.println("Il seguente prodotto " + prodotto + " è stato aggiunto!");
+        return listaProdotti;
     }
 
-    public void rimuoviProdotto(Prodotto prodotto){
-        if(listaProdotti.contains(prodotto)){
-            listaProdotti.remove(prodotto);
-            System.out.println("Prodotto rimosso: " + prodotto);
-        } else {
-            System.out.println("Prodotto non rilevato: " + prodotto);
-        }
+    public List<Prodotto> rimuoviProdotto(int id){
+        listaProdotti.removeIf(prodotto -> prodotto.getIdProdotto(id));
+        return listaProdotti;
     }
 
     public List<Prodotto> getProdotti(){
@@ -30,7 +25,6 @@ public class Magazzino {
     public boolean getProdottoById(int id){
         for(Prodotto prodotto: listaProdotti){
             if(prodotto.getIdProdotto() == id){
-                System.out.println("Id del prodotto: " + prodotto.getIdProdotto());
                 return true;
             }
         }

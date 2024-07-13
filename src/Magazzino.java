@@ -14,7 +14,7 @@ public class Magazzino {
     }
 
     public List<Prodotto> rimuoviProdotto(int id){
-        listaProdotti.removeIf(prodotto -> prodotto.getIdProdotto().equals(id));
+        listaProdotti.removeIf(prodotto -> prodotto.getIdProdotto(id));
         return listaProdotti;
     }
 

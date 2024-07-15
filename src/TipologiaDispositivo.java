@@ -1,5 +1,6 @@
 public enum TipologiaDispositivo {
-    SMARTPHONE,
-    TABLET,
-    NOTEBOOK;
+    DispositivoElettronico;
+    //TABLET,
+    //NOTEBOOK;
+
 }

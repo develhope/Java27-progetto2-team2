@@ -15,6 +15,7 @@ public class DispositivoElettronico extends Prodotto{
     }
 
 
+
     //Getter
     public double getDimDisplay() {
         return dimDisplay;

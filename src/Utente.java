@@ -4,17 +4,14 @@ public class Utente {
     private String cognome;
     private String id;
     private String password; // ID o password per avere utente univoco
-    private Carrello carrelloUtente; // Carrello associato all'utente
 
     // Costruttore
-    public Utente(String nome, String cognome, String id, String password, Magazzino magazzino) {
+    public Utente(String nome, String cognome, String id, String password) {
         this.nome = nome;
         this.cognome = cognome;
         this.id = id;
         this.password = password;
-        this.carrelloUtente = new Carrello; // Passo il magazzino al carrello
     }
-
 
     // Getters e Setters -------------------------------------------------------------
     public String getNome() {
@@ -49,38 +46,4 @@ public class Utente {
         this.password = password;
     }
 
-    public Carrello getCarrelloUtente() {
-        return carrelloUtente;
-    }
-
-    public void setCarrelloUtente(Carrello carrelloUtente) {
-        this.carrelloUtente = carrelloUtente;
-    }
-
-    // Metodi per la gestione del carrello -------------------------------------------------------------
-    // Metodo per aggiungere prodotto al carrello
-    public void aggiungiProdottoAlCarrello(Prodotto prodotto) {
-        carrelloUtente.aggiungiProdotto(prodotto);
-    }
-
-    // Metodo per rimuovere prodotto dal carrello
-    public void rimuoviProdottoDalCarrello(Prodotto prodotto) {
-        carrelloUtente.rimuoviProdotto(prodotto);
-    }
-
-    // Metodo per visualizzare il contenuto del carrello
-    public void visualizzaCarrello() {
-        carrelloUtente.stampaCarrello();
-    }
-
-    // Metodo per calcolare il totale del carrello
-    public double calcolaTotaleCarrello() {
-        return carrelloUtente.calcolaTotale();
-    }
-
-    // Metodo con messaggio di acquisto finalizzato e che svuoti il carrello
-    public void finalizzaAcquisto() {
-        carrelloUtente.svuotaCarrello();
-        System.out.println("Acquisto finalizzato con successo! Grazie " + nome + " " + cognome + ".");
-    }
 }

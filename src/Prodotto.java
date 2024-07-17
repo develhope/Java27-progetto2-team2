@@ -20,6 +20,7 @@ public abstract class Prodotto {
     }
 
 
+
     //Getter
     public String getTipoProdotto() {
         return this.tipoProdotto;

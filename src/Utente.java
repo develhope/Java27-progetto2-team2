@@ -12,7 +12,7 @@ public class Utente {
         this.cognome = cognome;
         this.id = id;
         this.password = password;
-        this.carrelloUtente = new Carrello(magazzino); // Passo il magazzino al carrello
+        this.carrelloUtente = new Carrello; // Passo il magazzino al carrello
     }
 
 

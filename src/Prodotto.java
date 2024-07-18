@@ -70,4 +70,16 @@ public abstract class Prodotto {
     public void setPrezzoAcquisto(double prezzoAcquisto) {
         this.prezzoAcquisto = prezzoAcquisto;
     }
+
+    @Override
+    public String toString() {
+        return "Prodotto{" +
+                "tipoProdotto='" + tipoProdotto + '\'' +
+                ", produttore='" + produttore + '\'' +
+                ", modello='" + modello + '\'' +
+                ", idProdotto=" + idProdotto +
+                ", prezzoVendita=" + prezzoVendita +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                '}';
+    }
 }

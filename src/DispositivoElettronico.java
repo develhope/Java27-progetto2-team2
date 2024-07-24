@@ -49,4 +49,14 @@ public class DispositivoElettronico extends Prodotto{
     public void setTipologia(TipologiaDispositivoElettronico tipologia) {
         this.tipologia = tipologia;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "DispositivoElettronico{" +
+                "dimDisplay=" + dimDisplay +
+                ", descrizioneDispositivo='" + descrizioneDispositivo + '\'' +
+                ", dimArchivio=" + dimArchivio +
+                ", tipologia=" + tipologia +
+                '}';
+    }
 }

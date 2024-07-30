@@ -3,8 +3,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        String RESET = "\u001B[0m";
+        String RED = "\u001B[31m"; // Work in Progress
+
         //Inizializzazione Classi
         Magazzino magazzino = new Magazzino();
+        Utente utente = new Utente("Domingo", "Flamingo", "1", "passwordsicuramentesicura");
 
         //Dispositivi
         DispositivoElettronico dispositivoElettronico1 = new DispositivoElettronico("Smartphone","Apple","IPhone 15 pro", 123, 1499.99,999.99,6.1,256.00,"Telefono Apple", TipologiaDispositivoElettronico.SMARTPHONE);
@@ -14,6 +18,9 @@ public class Main {
         magazzino.aggiungiProdotto(dispositivoElettronico1);
         magazzino.aggiungiProdotto(dispositivoElettronico2);
 
+        utente.aggiungiProdottoAlCarrello(dispositivoElettronico1);
+        utente.aggiungiProdottoAlCarrello(dispositivoElettronico2);
+
         //Menù di scelta
         Scanner scanner = new Scanner(System.in);
 
@@ -21,21 +28,21 @@ public class Main {
                 "\nMenù principale (Utente): \n" +
                 "\n1.    Visualizza prodotti da magazzino. " +
                 "\n2.    Ricerca prodotti (-> Più opzioni) " +
-                "\n3.    Gestisci carrello (-> Più opzioni) " +
-                "\n4.    Visualizza spesa media. " +
-                "\n5.    Gestisci magazzino (-> Più opzioni) " +
-                "\n6.    Termina operazione.\n" +
+                        RED +"\n3.    Gestisci carrello (-> Più opzioni) (WIP) " +
+                "\n4.    Visualizza spesa media. (WIP) " +
+                "\n5.    Gestisci magazzino (-> Più opzioni) (WIP) " +
+                RESET +"\n6.    Termina operazione.\n" +
                 "\nInerisci la tua scelta: \n");
 
         int scelta = scanner.nextInt();
 
-        sceltaMenu(scelta, magazzino, scanner);
+        sceltaMenu(scelta, magazzino, scanner, utente);
 
 
         scanner.close();
     }
 
-    public static void sceltaMenu(int a, Magazzino m, Scanner scanner){
+    public static void sceltaMenu(int a, Magazzino m, Scanner scanner, Utente u){
             switch (a){
                 case 1->{
                     for(Prodotto prodotto : m.getProdotti()){
@@ -43,7 +50,7 @@ public class Main {
                     }
                 }
                 case 2->{
-                    ricercaProdotto(m,scanner);
+                    ricercaProdotto(m,scanner,u);
                 }
                 case 3->{
 
@@ -55,17 +62,17 @@ public class Main {
 
                 }
                 case 6-> {
-                    System.out.println("Uscito dal menù");
+                    main(null);
                 }
             }
 
     }
 
-    public static void ricercaProdotto(Magazzino m,Scanner scanner){
+    public static void ricercaProdotto(Magazzino m,Scanner scanner, Utente u){
         System.out.println(
                 "\nMenù ricerca prodotto: \n" +
                         "\n1.    Magazzino. " +
-                        "\n2.    Carrello (WIP) " +
+                        "\n2.    Carrello. " +
                         "\n3.    Termina operazione " +
                         "\nInerisci la tua scelta: \n");
 
@@ -73,7 +80,7 @@ public class Main {
 
         switch (choice){
             case 1 -> ricercaProdottoNelMagazzino(scanner, m);
-            case 2 -> ricercaProdottoNelCarrello(scanner); //WIP
+            case 2 -> ricercaProdottoNelCarrello(scanner, u);
             case 3 -> main(null);
         }
     }
@@ -83,10 +90,10 @@ public class Main {
                 "\nMenù principale (Utente): \n" +
                         "\n1.    Ricerca per Tipo. " +
                         "\n2.    Ricerca per Produttore " +
-                        "\n3.    Ricerca per Modello (WIP) " +
-                        "\n4.    Ricerca per Range di Prezzo. (WIP) " +
-                        "\n5.    Ricerca per id (WIP) " +
-                        "\n6.    Termina operazione.\n" +
+                        "\n3.    Ricerca per Modello " +
+                        "\n4.    Ricerca per Range di Prezzo. " +
+                        "\u001B[33m" +"\n5.    Ricerca per id (FIX REQUIRED)" +
+                        "\u001B[0m"+"\n6.    Termina operazione.\n" +
                         "\nInerisci la tua scelta: \n");
 
         int choice = scanner.nextInt();
@@ -104,10 +111,41 @@ public class Main {
                 String finderHandler = scanner.nextLine();
                 System.out.println(m.ricercaPerProduttore(finderHandler));
             }
+            case 3 ->{
+                System.out.println("Inserisci il Modello:");
+                String finderHandler = scanner.nextLine();
+                System.out.println(m.ricercaPerModello(finderHandler));
+            }
+            case 4 ->{
+                System.out.println("Inserisci il prezzo più basso ( es. 400.0) ");
+                double initPrice = scanner.nextDouble();
+                System.out.println("Inserisci il prezzo più alto (es. 2000.0) ");
+                double finalPrice = scanner.nextDouble();
+                System.out.println(m.ricercaPerRangeDiPrezzo(initPrice,finalPrice));
+            }
+            case 5 ->{
+                System.out.println("Inserisci l'id del prodotto:");
+                int finderHandler = scanner.nextInt();
+                System.out.println(m.getProdottoById(finderHandler));
+            }
+            case 6 -> main(null);
         }
     }
 
-    public static void ricercaProdottoNelCarrello(Scanner scanner){
+    public static void ricercaProdottoNelCarrello(Scanner scanner, Utente u){
+        System.out.println(
+                "\nMenù principale (Utente): \n" +
+                        "\n1.    Contenuto Carrello. " +
+                        "\n2.    Termina Operazione. " +
+                        "\nInerisci la tua scelta: \n");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Serve a pulire la linea precedentemente creata da scanner.nextInt();
+
+        switch (choice){
+            case 1 -> System.out.println(u.getCarrelloUtente());
+            case 2 -> main(null);
+        }
 
     }
 

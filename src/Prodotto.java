@@ -5,16 +5,18 @@ public abstract class Prodotto {
     private String produttore;
     private String modello;
     private int idProdotto;
+    private String descrizioneDispositivo;
     private double prezzoVendita;
     private double prezzoAcquisto;
 
 
     //Costruttore
-    public Prodotto(String tipoProdotto, String produttore, String modello, int idProdotto, double prezzoVendita, double prezzoAcquisto){
+    public Prodotto(String tipoProdotto, String produttore, String modello, int idProdotto, String descrizioneDispositivo, double prezzoVendita, double prezzoAcquisto){
         this.tipoProdotto = tipoProdotto;
         this.produttore = produttore;
         this.modello = modello;
         this.idProdotto = idProdotto;
+        this.descrizioneDispositivo = descrizioneDispositivo;
         this.prezzoAcquisto = prezzoAcquisto;
         this.prezzoVendita = prezzoVendita;
     }
@@ -36,6 +38,10 @@ public abstract class Prodotto {
 
     public int getIdProdotto() {
         return idProdotto;
+    }
+
+    public String getDescrizioneDispositivo() {
+        return descrizioneDispositivo;
     }
 
     public double getPrezzoVendita() {
@@ -63,6 +69,10 @@ public abstract class Prodotto {
         this.idProdotto = idProdotto;
     }
 
+    public void setDescrizioneDispositivo(String descrizioneDispositivo) {
+        this.descrizioneDispositivo = descrizioneDispositivo;
+    }
+
     public void setPrezzoVendita(double prezzoVendita) {
         this.prezzoVendita = prezzoVendita;
     }
@@ -78,6 +88,7 @@ public abstract class Prodotto {
                 ", produttore='" + produttore + '\'' +
                 ", modello='" + modello + '\'' +
                 ", idProdotto=" + idProdotto +
+                ", descrizioneDispositivo='" + descrizioneDispositivo + '\'' +
                 ", prezzoVendita=" + prezzoVendita +
                 ", prezzoAcquisto=" + prezzoAcquisto +
                 '}';

@@ -47,7 +47,7 @@ public class Magazzino {
      * @param pfinal Il prezzo finale del Range di ricerca (int)
      * @return ritorna la lista dei prodotti filtrata
      */
-    public List<Prodotto> ricercaPerRangeDiPrezzo(int pinit, int pfinal){
+    public List<Prodotto> ricercaPerRangeDiPrezzo(double pinit, double pfinal){
         return listaProdotti.stream().filter(k -> k.getPrezzoVendita() >= pinit && k.getPrezzoVendita() <= pfinal ).toList();
     }
 

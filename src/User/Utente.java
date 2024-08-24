@@ -1,4 +1,9 @@
+package User;
+
 import Exceptions.ProductDoesntExistException;
+import Product.Prodotto;
+import Carrello.Carrello;
+
 import java.util.List;
 
 public class Utente {
@@ -7,7 +12,7 @@ public class Utente {
     private final String cognome;
     private final String id;
     private String password; //password potrebbe essere l'unico dato modificabile con metodo apposito?
-    private final Carrello carrelloUtente; // Carrello associato all'utente
+    private final Carrello carrelloUtente; // Carrello.Carrello associato all'utente
     private final RuoloUtente ruolo;
 
 // Costruttore
@@ -16,7 +21,7 @@ public class Utente {
         this.cognome = cognome;
         this.id = id;
         this.password = password;
-        this.carrelloUtente = new Carrello(); // Non è necessario passare il Magazzino
+        this.carrelloUtente = new Carrello(); // Non è necessario passare il Magazzino.Magazzino
         this.ruolo = ruolo;
     }
 
@@ -74,7 +79,7 @@ public class Utente {
 //30.07 con controllo se Cliente
     /**
      * Aggiunge un prodotto al carrello dell'utente.
-     * @param prodotto Prodotto da aggiungere
+     * @param prodotto Product.Prodotto da aggiungere
      */
     public void aggiungiProdottoAlCarrello(Prodotto prodotto) {
         if (isCliente()) {
@@ -82,7 +87,7 @@ public class Utente {
             if (!aggiunto) {
                 System.out.println("Il prodotto è già presente nel carrello.");
             } else {
-                System.out.println("Prodotto aggiunto al carrello con successo.");
+                System.out.println("Product.Prodotto aggiunto al carrello con successo.");
             }
         } else {
             System.out.println("Operazione non permessa. Solo i clienti possono aggiungere prodotti al carrello.");
@@ -97,7 +102,7 @@ public class Utente {
         if (isCliente()) {
             try {
                 Prodotto prodottoRimosso = carrelloUtente.rimuoviProdotto(idProdotto);
-                System.out.println("Prodotto rimosso dal carrello: " + prodottoRimosso);
+                System.out.println("Product.Prodotto rimosso dal carrello: " + prodottoRimosso);
             } catch (ProductDoesntExistException e) {
                 System.out.println("Errore: " + e.getMessage());
             }

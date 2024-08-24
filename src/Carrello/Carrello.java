@@ -1,4 +1,7 @@
+package Carrello;
+
 import Exceptions.ProductDoesntExistException;
+import Product.Prodotto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +16,7 @@ public class Carrello {
 
     /**
      * Metodo per l'aggiunta di un prodotto al carrello.
-     * @param prodotto prende in entrata un variabile di tipo Prodotto.
+     * @param prodotto prende in entrata un variabile di tipo Product.Prodotto.
      * @return ritorna true/false in base al risultato del metodo:
      * (true) se il prodotto e stato aggiunto, (false) sei il prodotto non è stato aggiunto.
      *
@@ -41,12 +44,12 @@ public class Carrello {
                 return element;
             }
         }
-        throw new ProductDoesntExistException("Prodotto non trovato");
+        throw new ProductDoesntExistException("Product.Prodotto non trovato");
     }
 
 
     /**
-     * Calcolo prezzo totale del Carrello
+     * Calcolo prezzo totale del Carrello.Carrello
      * @return ritorna il prezzo totale del carrello
      */
     public double calcolaTotale() {
@@ -73,7 +76,7 @@ public class Carrello {
 
     @Override
     public String toString() {
-        return "Carrello{" +
+        return "Carrello.Carrello{" +
                 "prodotti=" + prodotti +
                 '}';
     }

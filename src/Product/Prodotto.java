@@ -1,3 +1,5 @@
+package Product;
+
 public abstract class Prodotto {
 
     //Variabili
@@ -83,7 +85,7 @@ public abstract class Prodotto {
 
     @Override
     public String toString() {
-        return "Prodotto{" +
+        return "Product.Prodotto{" +
                 "tipoProdotto='" + tipoProdotto + '\'' +
                 ", produttore='" + produttore + '\'' +
                 ", modello='" + modello + '\'' +

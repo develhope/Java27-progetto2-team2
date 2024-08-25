@@ -1,6 +1,5 @@
 package JsonHandler;
 
-import User.Utente;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -11,25 +10,25 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class UserJsonHandler implements UserJsonReadable<List<Utente>>, UserJsonWritable<Utente> {
+public class JsonHandler implements JsonReadable<List<Object>>, JsonWritable<Object> {
     private final Gson gson;
 
-    public UserJsonHandler(){
+    public JsonHandler(){
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     @Override
-    public List<Utente> readFromJson(String filePath) throws IOException {
+    public List<Object> readFromJson(String filePath) throws IOException {
         try(FileReader reader = new FileReader(filePath)){
-            Type userListType = new TypeToken<List<Utente>>() {}.getType();
-            return gson.fromJson(reader,userListType);
+            Type objectListType = new TypeToken<List<Object>>() {}.getType();
+            return gson.fromJson(reader,objectListType);
         }
     }
 
     @Override
-    public void writeToJson(String filePath, Utente utente) throws IOException {
+    public void writeToJson(String filePath, Object object) throws IOException {
         try(FileWriter writer = new FileWriter(filePath)){
-            gson.toJson(utente,writer);
+            gson.toJson(object,writer);
         }
     }
 }

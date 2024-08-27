@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class JsonHandler{
+public class JsonHandler<T> {
     private final Gson gson;
 
     public JsonHandler(){
@@ -18,16 +18,16 @@ public class JsonHandler{
     }
 
 
-    public List<Object> readFromJson(String filePath) throws IOException {
+    public List<T> readFromJson(String filePath) throws IOException {
         try(FileReader reader = new FileReader(filePath)){
-            Type objectListType = new TypeToken<List<Object>>() {}.getType();
-            return gson.fromJson(reader,objectListType);
+            Type listType = new TypeToken<List<T>>() {}.getType();
+            return gson.fromJson(reader,listType);
         }
     }
 
-    public void writeToJson(String filePath, Object object) throws IOException {
+    public void writeToJson(String filePath, T type) throws IOException {
         try(FileWriter writer = new FileWriter(filePath)){
-            gson.toJson(object,writer);
+            gson.toJson(type,writer);
             writer.flush();
         }
     }

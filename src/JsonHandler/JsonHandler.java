@@ -10,14 +10,14 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class JsonHandler implements JsonReadable<List<Object>>, JsonWritable<Object> {
+public class JsonHandler{
     private final Gson gson;
 
     public JsonHandler(){
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
-    @Override
+
     public List<Object> readFromJson(String filePath) throws IOException {
         try(FileReader reader = new FileReader(filePath)){
             Type objectListType = new TypeToken<List<Object>>() {}.getType();
@@ -25,10 +25,10 @@ public class JsonHandler implements JsonReadable<List<Object>>, JsonWritable<Obj
         }
     }
 
-    @Override
     public void writeToJson(String filePath, Object object) throws IOException {
         try(FileWriter writer = new FileWriter(filePath)){
             gson.toJson(object,writer);
+            writer.flush();
         }
     }
 }

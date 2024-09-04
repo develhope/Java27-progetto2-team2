@@ -8,7 +8,9 @@ public class Main {
 
         //Inizializzazione Classi
         Magazzino magazzino = new Magazzino();
-        Utente utente = new Utente("Domingo", "Flamingo", "1", "passwordsicuramentesicura");
+        Gestore gestore = new Gestore("Domingo", "Flamingo", "1", "passwordsicuramentesicura");
+        Cliente cliente = new Cliente("Saturnio", "Ramingo", "1", "passwordsegretissimamentesegreta");
+
 
         //Dispositivi
         DispositivoElettronico dispositivoElettronico1 = new DispositivoElettronico("Smartphone","Apple","IPhone 15 pro", 123, 1499.99,999.99,6.1,256.00,"Telefono Apple", TipologiaDispositivoElettronico.SMARTPHONE);
@@ -18,8 +20,12 @@ public class Main {
         magazzino.aggiungiProdotto(dispositivoElettronico1);
         magazzino.aggiungiProdotto(dispositivoElettronico2);
 
-        utente.aggiungiProdottoAlCarrello(dispositivoElettronico1);
-        utente.aggiungiProdottoAlCarrello(dispositivoElettronico2);
+        //03.09 Aggiunta Dispositivi a Magazino tramite gestore
+        gestore.aggiungiProdottoAlMagazzino(dispositivoElettronico1);
+        gestore.aggiungiProdottoAlMagazzino(dispositivoElettronico2);
+
+        cliente.aggiungiProdottoAlCarrello(dispositivoElettronico1);
+        cliente.aggiungiProdottoAlCarrello(dispositivoElettronico2);
 
         //Menù di scelta
         Scanner scanner = new Scanner(System.in);
@@ -36,13 +42,13 @@ public class Main {
 
         int scelta = scanner.nextInt();
 
-        sceltaMenu(scelta, magazzino, scanner, utente);
+        sceltaMenu(scelta, magazzino, scanner, cliente, gestore);
 
 
         scanner.close();
     }
 
-    public static void sceltaMenu(int a, Magazzino m, Scanner scanner, Utente u){
+    public static void sceltaMenu(int a, Magazzino m, Scanner scanner, Cliente cliente, Gestore gestore){
             switch (a){
                 case 1->{
                     for(Prodotto prodotto : m.getProdotti()){
@@ -50,7 +56,7 @@ public class Main {
                     }
                 }
                 case 2->{
-                    ricercaProdotto(m,scanner,u);
+                    ricercaProdotto(m,scanner, cliente, gestore);
                 }
                 case 3->{
 
@@ -68,7 +74,20 @@ public class Main {
 
     }
 
-    public static void ricercaProdotto(Magazzino m,Scanner scanner, Utente u){
+    public static void gestisciMagazzino(Gestore gestore, Scanner scanner) {
+        System.out.println("\nMenù gestione magazzino: \n" +
+                "\n1.    Aggiungi prodotto. " +
+                "\n2.    Rimuovi prodotto. " +
+                "\n3.    Visualizza prodotti in magazzino. " +
+                "\n4.    Termina operazione.\n" +
+                "\nInserisci la tua scelta: \n");
+
+        int scelta = scanner.nextInt();
+        scanner.nextLine(); // Pulizia dello scanner
+
+    }
+
+    public static void ricercaProdotto(Magazzino m, Scanner scanner, Cliente cliente, Gestore gestore){
         System.out.println(
                 "\nMenù ricerca prodotto: \n" +
                         "\n1.    Magazzino. " +
@@ -80,7 +99,7 @@ public class Main {
 
         switch (choice){
             case 1 -> ricercaProdottoNelMagazzino(scanner, m);
-            case 2 -> ricercaProdottoNelCarrello(scanner, u);
+            case 2 -> ricercaProdottoNelCarrello(scanner, cliente);
             case 3 -> main(null);
         }
     }
@@ -132,7 +151,7 @@ public class Main {
         }
     }
 
-    public static void ricercaProdottoNelCarrello(Scanner scanner, Utente u){
+    public static void ricercaProdottoNelCarrello(Scanner scanner, Cliente cliente){
         System.out.println(
                 "\nMenù principale (Utente): \n" +
                         "\n1.    Contenuto Carrello. " +
@@ -143,7 +162,7 @@ public class Main {
         scanner.nextLine(); // Serve a pulire la linea precedentemente creata da scanner.nextInt();
 
         switch (choice){
-            case 1 -> System.out.println(u.getCarrelloUtente());
+            case 1 -> System.out.println(cliente.getCarrelloUtente());
             case 2 -> main(null);
         }
 

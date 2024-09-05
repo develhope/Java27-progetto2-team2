@@ -1,3 +1,10 @@
+import Magazzino.Magazzino;
+import Product.DispositivoElettronico;
+import Product.Prodotto;
+import Product.TipologiaDispositivoElettronico;
+import User.RuoloUtente;
+import User.Utente;
+
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +15,8 @@ public class Main {
 
         //Inizializzazione Classi
         Magazzino magazzino = new Magazzino();
-        Utente utente = new Utente("Domingo", "Flamingo", "1", "passwordsicuramentesicura");
+        Utente utente = new Utente("Domingo", "Flamingo", "1", "passwordsicuramentesicura", RuoloUtente.CLIENTE);
+        Utente utente2 = new Utente("Gianpaolo","Carrelli","2","passowrdnonsicura",RuoloUtente.GESTORE);
 
         //Dispositivi
         DispositivoElettronico dispositivoElettronico1 = new DispositivoElettronico("Smartphone","Apple","IPhone 15 pro", 123, 1499.99,999.99,6.1,256.00,"Telefono Apple", TipologiaDispositivoElettronico.SMARTPHONE);
@@ -25,7 +33,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println(
-                "\nMenù principale (Utente): \n" +
+                "\nMenù principale (User.Utente): \n" +
                 "\n1.    Visualizza prodotti da magazzino. " +
                 "\n2.    Ricerca prodotti (-> Più opzioni) " +
                         RED +"\n3.    Gestisci carrello (-> Più opzioni) (WIP) " +
@@ -71,8 +79,8 @@ public class Main {
     public static void ricercaProdotto(Magazzino m,Scanner scanner, Utente u){
         System.out.println(
                 "\nMenù ricerca prodotto: \n" +
-                        "\n1.    Magazzino. " +
-                        "\n2.    Carrello. " +
+                        "\n1.    Magazzino.Magazzino. " +
+                        "\n2.    Carrello.Carrello. " +
                         "\n3.    Termina operazione " +
                         "\nInerisci la tua scelta: \n");
 
@@ -87,7 +95,7 @@ public class Main {
 
     public static void ricercaProdottoNelMagazzino(Scanner scanner, Magazzino m){
         System.out.println(
-                "\nMenù principale (Utente): \n" +
+                "\nMenù principale (User.Utente): \n" +
                         "\n1.    Ricerca per Tipo. " +
                         "\n2.    Ricerca per Produttore " +
                         "\n3.    Ricerca per Modello " +
@@ -134,8 +142,8 @@ public class Main {
 
     public static void ricercaProdottoNelCarrello(Scanner scanner, Utente u){
         System.out.println(
-                "\nMenù principale (Utente): \n" +
-                        "\n1.    Contenuto Carrello. " +
+                "\nMenù principale (User.Utente): \n" +
+                        "\n1.    Contenuto Carrello.Carrello. " +
                         "\n2.    Termina Operazione. " +
                         "\nInerisci la tua scelta: \n");
 

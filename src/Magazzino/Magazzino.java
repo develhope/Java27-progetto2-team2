@@ -1,3 +1,8 @@
+package Magazzino;
+
+import Product.Prodotto;
+import Product.TipologiaDispositivoElettronico;
+
 import java.util.ArrayList;
 import java.util.List;
 

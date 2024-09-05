@@ -1,3 +1,5 @@
+package Product;
+
 public class DispositivoElettronico extends Prodotto{
 
     //Variabili
@@ -43,7 +45,7 @@ public class DispositivoElettronico extends Prodotto{
 
     @Override
     public String toString() {
-        return super.toString() + "DispositivoElettronico{" +
+        return super.toString() + "Product.DispositivoElettronico{" +
                 "dimDisplay=" + dimDisplay +
                 ", dimArchivio=" + dimArchivio +
                 ", tipologia=" + tipologia +

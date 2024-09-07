@@ -2,7 +2,6 @@ import Magazzino.Magazzino;
 import Product.DispositivoElettronico;
 import Product.Prodotto;
 import Product.TipologiaDispositivoElettronico;
-import User.RuoloUtente;
 import User.Utente;
 
 import java.util.Scanner;

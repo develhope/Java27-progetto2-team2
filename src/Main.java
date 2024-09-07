@@ -9,7 +9,6 @@ import User.Utente;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -261,22 +260,54 @@ public class Main {
         System.out.println("Inserisci il cognome");
         String cognome = scanner.nextLine();
         System.out.println("Inserisci la password");
-        String password =scanner.nextLine();
-        System.out.println("conferma password");
+        String password = scanner.nextLine();
+        System.out.println("Conferma password");
         String confirmPassword = scanner.nextLine();
-        while (!password.equals(confirmPassword) ){
-            System.out.println("Le password inserite non combaciano riprovare");
+
+        // Verifica che le password corrispondano
+        while (!password.equals(confirmPassword)) {
+            System.out.println("Le password inserite non combaciano. Riprovare.");
             System.out.println("Inserisci la password");
             password = scanner.nextLine();
-            System.out.println("conferma password");
+            System.out.println("Conferma password");
             confirmPassword = scanner.nextLine();
         }
-        Type userListType = new TypeToken<List<Utente>>() {}.getType();
+
+        // Richiedi il ruolo
+        System.out.println("Inserisci il ruolo (cliente/gestore):");
+        String ruolo = scanner.nextLine();
+
+        // Creazione dell'utente in base al ruolo
+        Utente utente;
+        switch (ruolo.toLowerCase()) {
+            case "cliente":
+                utente = new Cliente(nome, cognome, "3", MD5Converter(password));
+                break;
+            case "gestore":
+                utente = new Gestore(nome, cognome, "3", MD5Converter(password));
+                break;
+            default:
+                throw new IllegalArgumentException("Ruolo non valido. Utilizzare 'cliente' o 'gestore'.");
+        }
+
+        // Scrittura dell'utente nel file JSON
+        List<Utente> utentiEsistenti = new ArrayList<>();
         JsonHandler jsonHandler = new JsonHandler();
-        Cliente cliente = new Cliente(nome,cognome, "3" , MD5Converter(password));
-        List<Utente> tmpList = new ArrayList<>();
-        tmpList.add(cliente);
-        jsonHandler.writeToJson("userdetails.json", tmpList);
+
+        // Leggi gli utenti esistenti dal file
+        try {
+            utentiEsistenti = jsonHandler.readFromJson("userdetails.json", new TypeToken<List<Utente>>() {}.getType());
+        } catch (IOException e) {
+            // Il file potrebbe non esistere ancora, il che è accettabile
+        }
+
+        // Aggiungi il nuovo utente alla lista
+        utentiEsistenti.add(utente);
+
+        // Scrivi di nuovo la lista nel file JSON
+        jsonHandler.writeToJson("userdetails.json", utentiEsistenti);
+
+        System.out.println("Registrazione completata con successo!");
     }
 
     public static Cliente login(Scanner scanner) throws IOException {

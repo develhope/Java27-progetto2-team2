@@ -1,5 +1,7 @@
 package User;
 
+import java.util.UUID;
+
 public abstract class Utente {  //08.29 modificata in classe astratta
     //inserisco final affinchè non vengano cambiati dopo creazione
     private final String nome;
@@ -12,7 +14,7 @@ public abstract class Utente {  //08.29 modificata in classe astratta
         controlloDati(nome, cognome, id, password); //08.29 invoco metodo controllo validità parametri in input
         this.nome = nome;
         this.cognome = cognome;
-        this.id = id;
+        this.id = UUID.randomUUID().toString();
         this.password = password;
     }
 

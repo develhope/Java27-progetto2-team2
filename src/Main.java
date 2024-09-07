@@ -2,8 +2,8 @@ import Magazzino.Magazzino;
 import Product.DispositivoElettronico;
 import Product.Prodotto;
 import Product.TipologiaDispositivoElettronico;
-import User.RuoloUtente;
-import User.Utente;
+import User.Cliente;
+import User.Gestore;
 
 import java.util.Scanner;
 
@@ -15,8 +15,8 @@ public class Main {
 
         //Inizializzazione Classi
         Magazzino magazzino = new Magazzino();
-        Utente utente = new Utente("Domingo", "Flamingo", "1", "passwordsicuramentesicura", RuoloUtente.CLIENTE);
-        Utente utente2 = new Utente("Gianpaolo","Carrelli","2","passowrdnonsicura",RuoloUtente.GESTORE);
+        Gestore gestore = new Gestore("Domingo", "Flamingo", "1", "passwordsicuramentesicura");
+        Cliente cliente = new Cliente("Gianpaolo","Carrelli","2","passowrdnonsicura");
 
         //Dispositivi
         DispositivoElettronico dispositivoElettronico1 = new DispositivoElettronico("Smartphone","Apple","IPhone 15 pro", 123, 1499.99,999.99,6.1,256.00,"Telefono Apple", TipologiaDispositivoElettronico.SMARTPHONE);
@@ -26,8 +26,11 @@ public class Main {
         magazzino.aggiungiProdotto(dispositivoElettronico1);
         magazzino.aggiungiProdotto(dispositivoElettronico2);
 
-        utente.aggiungiProdottoAlCarrello(dispositivoElettronico1);
-        utente.aggiungiProdottoAlCarrello(dispositivoElettronico2);
+        gestore.aggiungiProdottoAlMagazzino(dispositivoElettronico1);
+        gestore.aggiungiProdottoAlMagazzino(dispositivoElettronico2);
+
+        cliente.aggiungiProdottoAlCarrello(dispositivoElettronico1);
+        cliente.aggiungiProdottoAlCarrello(dispositivoElettronico2);
 
         //Menù di scelta
         Scanner scanner = new Scanner(System.in);
@@ -44,13 +47,13 @@ public class Main {
 
         int scelta = scanner.nextInt();
 
-        sceltaMenu(scelta, magazzino, scanner, utente);
+        sceltaMenu(scelta, magazzino, scanner, cliente, gestore);
 
 
         scanner.close();
     }
 
-    public static void sceltaMenu(int a, Magazzino m, Scanner scanner, Utente u){
+    public static void sceltaMenu(int a, Magazzino m, Scanner scanner, Cliente c, Gestore g){
             switch (a){
                 case 1->{
                     for(Prodotto prodotto : m.getProdotti()){
@@ -58,7 +61,7 @@ public class Main {
                     }
                 }
                 case 2->{
-                    ricercaProdotto(m,scanner,u);
+                    ricercaProdotto(m,scanner,c ,g);
                 }
                 case 3->{
 
@@ -76,7 +79,7 @@ public class Main {
 
     }
 
-    public static void ricercaProdotto(Magazzino m,Scanner scanner, Utente u){
+    public static void ricercaProdotto(Magazzino m,Scanner scanner, Cliente c, Gestore g){
         System.out.println(
                 "\nMenù ricerca prodotto: \n" +
                         "\n1.    Magazzino.Magazzino. " +
@@ -88,7 +91,7 @@ public class Main {
 
         switch (choice){
             case 1 -> ricercaProdottoNelMagazzino(scanner, m);
-            case 2 -> ricercaProdottoNelCarrello(scanner, u);
+            case 2 -> ricercaProdottoNelCarrello(scanner, c);
             case 3 -> main(null);
         }
     }
@@ -140,7 +143,7 @@ public class Main {
         }
     }
 
-    public static void ricercaProdottoNelCarrello(Scanner scanner, Utente u){
+    public static void ricercaProdottoNelCarrello(Scanner scanner, Cliente c){
         System.out.println(
                 "\nMenù principale (User.Utente): \n" +
                         "\n1.    Contenuto Carrello.Carrello. " +
@@ -151,7 +154,7 @@ public class Main {
         scanner.nextLine(); // Serve a pulire la linea precedentemente creata da scanner.nextInt();
 
         switch (choice){
-            case 1 -> System.out.println(u.getCarrelloUtente());
+            case 1 -> System.out.println(c.getCarrelloUtente());
             case 2 -> main(null);
         }
 

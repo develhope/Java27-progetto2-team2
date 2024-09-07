@@ -39,8 +39,10 @@ public abstract class Utente {  //08.29 modificata in classe astratta
         return id;
     }
 
-
-// 29.08 rimosso da utente perchè serve solo a Cliente ora?!?!
+    public String getPassword() {
+        return password;
+    }
+    // 29.08 rimosso da utente perchè serve solo a Cliente ora?!?!
     //30.07 Modificato in modo che restituisca lista prodotti carrello dell'utente
 
     // Gestione apposita per dato password

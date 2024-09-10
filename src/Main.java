@@ -23,8 +23,8 @@ public class Main {
 
         //Inizializzazione Classi
         Magazzino magazzino = new Magazzino();
-        Gestore gestore = new Gestore("Domingo", "Flamingo", "1", "passwordsicuramentesicura");
-        Cliente cliente = new Cliente("Gianpaolo","Carrelli","2","passowrdnonsicura");
+        Gestore gestore = new Gestore("Domingo", "Flamingo",  "passwordsicuramentesicura");
+        Cliente cliente = new Cliente("Gianpaolo","Carrelli","passowrdnonsicura");
 
         //Dispositivi
         DispositivoElettronico dispositivoElettronico1 = new DispositivoElettronico("Smartphone","Apple","IPhone 15 pro", 123, 1499.99,999.99,6.1,256.00,"Telefono Apple", TipologiaDispositivoElettronico.SMARTPHONE);
@@ -34,12 +34,6 @@ public class Main {
         magazzino.aggiungiProdotto(dispositivoElettronico1);
         magazzino.aggiungiProdotto(dispositivoElettronico2);
 
-        gestore.aggiungiProdottoAlMagazzino(dispositivoElettronico1);
-        gestore.aggiungiProdottoAlMagazzino(dispositivoElettronico2);
-
-        cliente.aggiungiProdottoAlCarrello(dispositivoElettronico1);
-        cliente.aggiungiProdottoAlCarrello(dispositivoElettronico2);
-
         //Menù di scelta
         Scanner scanner = new Scanner(System.in);
 
@@ -47,7 +41,6 @@ public class Main {
 
                 "\n1.    Registrati " +
                 "\n2.    Accedi " +
-                RESET +"\n6.    Termina operazione.\n" +
                 "\nInerisci la tua scelta: \n"
 
         );
@@ -56,40 +49,65 @@ public class Main {
         scanner.nextLine();
 
         try{
-            registerOrLoginMenu(sceltaMenuRegisterLogin,scanner);
+            registerOrLoginMenu(sceltaMenuRegisterLogin,scanner,magazzino);
 
         }catch (IOException ioException){
             System.out.println(ioException.getMessage());
         }
 
+
+    }
+
+    public static void menuCliente(Scanner scanner,Utente utente){
         System.out.println(
-                "\nMenù principale (User.Utente): \n" +
-                "\n1.    Visualizza prodotti da magazzino. " +
-                "\n2.    Ricerca prodotti (-> Più opzioni) " +
-                        "\n3.    Gestisci carrello (-> Più opzioni) (WIP) " +
-                        RED + "\n4.    Gestisci magazzino (-> Più opzioni) (WIP) " +
-                RESET +"\n5.    Termina operazione.\n" +
-                "\nInerisci la tua scelta: \n");
+                "\nMenù principale (Cliente): \n" +
+                        "\n1.    Gestisci carrello (-> Più opzioni) " +
+                        "\n2.    Termina operazione.\n" +
+                        "\nInerisci la tua scelta: \n");
 
         int scelta = scanner.nextInt();
         scanner.nextLine();
 
-        sceltaMenu(scelta, magazzino, scanner, cliente, gestore);
+        gestireCarello(scanner, (Cliente)utente);
 
 
         scanner.close();
     }
 
-    public static void registerOrLoginMenu(int scelta, Scanner scanner) throws IOException {
+    public static void registerOrLoginMenu(int scelta, Scanner scanner, Magazzino magazzino) throws IOException {
         switch (scelta){
             case 1 -> register(scanner);
             case 2 -> {
-                Cliente cliente = login(scanner);
+                Utente utente = login(scanner);
+                if(utente.getRuolo().equals("Gestore")){
+                    menuGestore(scanner,utente, magazzino);
+                }
+                else if (utente.getRuolo().equals("Cliente")){
+                    menuCliente(scanner, utente);
+                }
             }
         }
     }
 
-    public static void sceltaMenu(int a, Magazzino m, Scanner scanner, Cliente c, Gestore g){
+    public static void menuGestore(Scanner scanner, Utente utente, Magazzino magazzino){
+        System.out.println(
+                "\nMenù principale (Gestore): \n" +
+                        "\n1.    Visualizza prodotti in magazzino. " +
+                        "\n2.    Ricerca prodotti (-> Più opzioni) " +
+                        "\n3.    Rimuovi prodotto per ID da magazzino" +
+                        "\n4.    Termina operazione.\n" +
+                        "\nInerisci la tua scelta: \n");
+
+        int scelta = scanner.nextInt();
+        scanner.nextLine();
+
+        sceltaMenuGestore(scelta,scanner,utente,magazzino);
+    }
+
+
+
+  public static void sceltaMenuGestore(int a, Scanner scanner, Utente utente, Magazzino m){
+
             switch (a){
                 case 1->{
                     for(Prodotto prodotto : m.getProdotti()){
@@ -97,21 +115,21 @@ public class Main {
                     }
                 }
                 case 2->{
-                    ricercaProdotto(m,scanner,c ,g);
+                    ricercaProdottoNelMagazzino(scanner,m);
                 }
                 case 3->{
-                    gestireCarello(scanner,c);
+                    System.out.println("Inserisci l'id del prodotto che vuoi rimuovere dal magazzino");
+                    int sceltaProdottoDaRimuovere = scanner.nextInt();
+                    m.rimuoviProdotto(sceltaProdottoDaRimuovere);
+                    System.out.println("Prodotto con id: " + sceltaProdottoDaRimuovere + " è stato rimosso");
                 }
                 case 4->{
-                    c.calcolaTotaleCarrello();
+                    menuGestore(scanner,utente,m);
                 }
-                case 5->{
-                    main(null);
-                }
-
             }
 
     }
+
 
     public static void gestireCarello(Scanner scanner, Cliente cliente){
 
@@ -119,10 +137,10 @@ public class Main {
         boolean isInMenu = true;
         while(isInMenu){
 
-            System.out.println("\nMenù carrello): \n" +
+            System.out.println("\nMenù carrello: \n" +
                     "\n1.    Visualizza prodotti nel carrello. " +
                     "\n2.    Aggiungi prodotto nel carrello " +
-                    "\n3.   Rimuovi prodotto dal carrello " +
+                    "\n3.    Rimuovi prodotto dal carrello " +
                     "\n4.    Visualizza totale carrello. " +
                     "\n5.    Termina operazione.\n" +
                     "\nInerisci la tua scelta: \n");
@@ -137,7 +155,7 @@ public class Main {
                 }
                 case 4 -> System.out.println("Spesa totale: " + cliente.calcolaTotaleCarrello());
                 case 5 -> {
-                    main(null);
+                    menuCliente(scanner,cliente);
                 }
             }
         }
@@ -166,29 +184,18 @@ public class Main {
         }
         return null;
         }
+
         public static void removeProdotto(){
 
         }
 
 
 
-    public static void ricercaProdotto(Magazzino m,Scanner scanner, Cliente c, Gestore g){
-        System.out.println(
-                "\nMenù ricerca prodotto: \n" +
-                        "\n1.    Magazzino.Magazzino. " +
-                        "\n2.    Carrello.Carrello. " +
-                        "\n3.    Termina operazione " +
-                        "\nInerisci la tua scelta: \n");
 
-        int choice = scanner.nextInt();
 
-        switch (choice){
-            case 1 -> ricercaProdottoNelMagazzino(scanner, m);
-            case 2 -> ricercaProdottoNelCarrello(scanner, c);
-            case 3 -> main(null);
-        }
+    public static void gestisciMagazzino(Scanner scanner, Utente utente){
+        System.out.println("In scope");
     }
-
 
     public static void ricercaProdottoNelMagazzino(Scanner scanner, Magazzino m){
         System.out.println(
@@ -197,8 +204,8 @@ public class Main {
                         "\n2.    Ricerca per Produttore " +
                         "\n3.    Ricerca per Modello " +
                         "\n4.    Ricerca per Range di Prezzo. " +
-                        "\u001B[33m" +"\n5.    Ricerca per id (FIX REQUIRED)" +
-                        "\u001B[0m"+"\n6.    Termina operazione.\n" +
+                        "\n5.    Ricerca per id" +
+                        "\n6.    Termina operazione.\n" +
                         "\nInerisci la tua scelta: \n");
 
         int choice = scanner.nextInt();
@@ -231,28 +238,12 @@ public class Main {
             case 5 ->{
                 System.out.println("Inserisci l'id del prodotto:");
                 int finderHandler = scanner.nextInt();
-                System.out.println(m.getProdottoById(finderHandler));
+                m.getProdottoById(finderHandler);
             }
             case 6 -> main(null);
         }
     }
 
-    public static void ricercaProdottoNelCarrello(Scanner scanner, Cliente c){
-        System.out.println(
-                "\nMenù principale (User.Utente): \n" +
-                        "\n1.    Contenuto Carrello.Carrello. " +
-                        "\n2.    Termina Operazione. " +
-                        "\nInerisci la tua scelta: \n");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // Serve a pulire la linea precedentemente creata da scanner.nextInt();
-
-        switch (choice){
-            case 1 -> System.out.println(c.getCarrelloUtente());
-            case 2 -> main(null);
-        }
-
-    }
 
     public static void register(Scanner scanner) throws IOException {
         System.out.println("Inserisci il nome:");
@@ -281,10 +272,10 @@ public class Main {
         Utente utente;
         switch (ruolo.toLowerCase()) {
             case "cliente":
-                utente = new Cliente(nome, cognome, "3", MD5Converter(password));
+                utente = new Cliente(nome, cognome,  MD5Converter(password));
                 break;
             case "gestore":
-                utente = new Gestore(nome, cognome, "3", MD5Converter(password));
+                utente = new Gestore(nome, cognome,  MD5Converter(password));
                 break;
             default:
                 throw new IllegalArgumentException("Ruolo non valido. Utilizzare 'cliente' o 'gestore'.");
@@ -302,7 +293,13 @@ public class Main {
         }
 
         // Aggiungi il nuovo utente alla lista
-        utentiEsistenti.add(utente);
+        if(utentiEsistenti == null){
+            utentiEsistenti = new ArrayList<>();
+
+        }else {
+            System.out.println("Impossibile aggiungere l'utente, la lista è null!");
+        }
+         utentiEsistenti.add(utente);
 
         // Scrivi di nuovo la lista nel file JSON
         jsonHandler.writeToJson("userdetails.json", utentiEsistenti);
@@ -310,26 +307,38 @@ public class Main {
         System.out.println("Registrazione completata con successo!");
     }
 
-    public static Cliente login(Scanner scanner) throws IOException {
-        System.out.println("Nome utente:");
-        String nome = scanner.nextLine();
-        System.out.println("Password:");
-        String password = scanner.nextLine();
+    public static Utente login(Scanner scanner) throws IOException {
 
-        // Create a JsonHandler instance
-        JsonHandler jsonHandler = new JsonHandler();
+        boolean isLogged = false;
 
-        // Read the single Utente object from the JSON file
-        Cliente cliente = jsonHandler.readSingleFromJson("userdetails.json", Cliente.class);
+        while(!isLogged){
+            System.out.println("Nome utente:");
+            String nome = scanner.nextLine();
+            System.out.println("Password:");
+            String password = scanner.nextLine();
 
-        // Check if the input credentials match the ones in the JSON file
-        if (cliente.getNome().equals(nome) && cliente.getPassword().equals(MD5Converter(password))) {
-            System.out.println("Benvenuto " + cliente.getNome() + " " +cliente.getCognome());
-            return cliente;
+            JsonHandler jsonHandler = new JsonHandler();
+
+            List<Utente> utentiEsistenti = jsonHandler.readFromJson("userdetails.json", new TypeToken<List<Utente>>() {}.getType());
+
+            for (Utente utente : utentiEsistenti) {
+                if (utente instanceof Cliente cliente) {
+                    if (cliente.getNome().equals(nome) && cliente.getPassword().equals(MD5Converter(password))) {
+                        System.out.println("Benvenuto " + cliente.getNome() + " " + cliente.getCognome() + " ruolo(" + cliente.getRuolo() + ")" );
+                        return cliente;
+                    }
+                }
+                if(utente instanceof Gestore gestore){
+                    if(gestore.getNome().equals(nome) && gestore.getPassword().equals(MD5Converter(password))){
+                        System.out.println("Benvenuto " + gestore.getNome() + " " + gestore.getCognome() + " ruolo(" + gestore.getRuolo() + ")" );
+                        return gestore;
+                    }
+                }
+            }
+
+
         }
-
-        // If no match is found
-        System.out.println("Login fallito: nessun utente trovato con questi dati");
+        System.out.println("Login fallito: nessun utente trovato con questi dati\n");
         return null;
     }
 

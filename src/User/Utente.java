@@ -12,8 +12,8 @@ public abstract class Utente {  //08.29 modificata in classe astratta
 
 
     // Costruttore
-    public Utente(String nome, String cognome, String id, String password, String ruolo) {
-        controlloDati(nome, cognome, id, password); //08.29 invoco metodo controllo validità parametri in input
+    public Utente(String nome, String cognome, String password, String ruolo) {
+        controlloDati(nome, cognome, password); //08.29 invoco metodo controllo validità parametri in input
         this.nome = nome;
         this.cognome = cognome;
         this.id = UUID.randomUUID().toString();
@@ -22,10 +22,9 @@ public abstract class Utente {  //08.29 modificata in classe astratta
     }
 
     // Metodo comune a tutti gli utenti, controllo che non ci siano dati null o mancanti, altrimenti lancio eccezione
-    private void controlloDati(String nome, String cognome, String id, String password) {
+    private void controlloDati(String nome, String cognome,  String password) {
         if (nome == null || nome.trim().isEmpty() ||
                 cognome == null || cognome.trim().isEmpty() ||
-                id == null || id.trim().isEmpty() ||
                 password == null || password.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome, cognome, id e password non possono essere nulli o mancanti.");
         }

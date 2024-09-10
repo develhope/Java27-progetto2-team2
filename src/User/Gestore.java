@@ -9,7 +9,7 @@ public class Gestore extends Utente {
     private Magazzino magazzino;
 
     public Gestore(String nome, String cognome, String id, String password) {
-        super(nome, cognome, id, password);
+        super(nome, cognome, id, password, "Gestore");
         this.magazzino = new Magazzino();
     }
 

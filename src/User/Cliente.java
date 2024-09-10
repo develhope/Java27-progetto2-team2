@@ -11,7 +11,7 @@ public class Cliente extends Utente {
 
     // Costruttore della classe `Cliente`
     public Cliente(String nome, String cognome, String id, String password) {
-        super(nome, cognome, id, password);  // Richiama il costruttore della classe astratta `Utente`
+        super(nome, cognome, id, password, "Cliente");
         this.carrelloUtente = new Carrello(); //03.09 carrello direttamente in Cliente
     }
 

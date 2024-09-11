@@ -85,12 +85,12 @@ public class Magazzino {
         return new ArrayList<>(listaProdotti);
     }
 
-    public boolean getProdottoById(int id){
+    public void getProdottoById(int id){
         for(Prodotto prodotto: listaProdotti){
             if(prodotto.getIdProdotto() == id){
-                return true;
+                System.out.println(prodotto);
             }
+            else System.out.println("Prodotto con id: " + id + " non trovato.");
         }
-        return false;
     }
 }

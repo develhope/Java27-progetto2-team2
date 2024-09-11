@@ -8,8 +8,8 @@ import java.util.List;
 public class Gestore extends Utente {
     private Magazzino magazzino;
 
-    public Gestore(String nome, String cognome, String id, String password) {
-        super(nome, cognome, id, password, "Gestore");
+    public Gestore(String nome, String cognome, String password) {
+        super(nome, cognome, password, "Gestore");
         this.magazzino = new Magazzino();
     }
 

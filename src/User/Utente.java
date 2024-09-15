@@ -2,18 +2,18 @@ package User;
 
 import java.util.UUID;
 
-public abstract class Utente {  //08.29 modificata in classe astratta
-    //inserisco final affinchè non vengano cambiati dopo creazione
+public abstract class Utente {
+
     private final String nome;
     private final String cognome;
     private final String id;
     private String password; //password unico dato modificabile con metodo apposito
-    private final String ruolo; // Nuovo attributo per il ruolo
+    private final String ruolo;
 
 
     // Costruttore
     public Utente(String nome, String cognome, String password, String ruolo) {
-        controlloDati(nome, cognome, password); //08.29 invoco metodo controllo validità parametri in input
+        controlloDati(nome, cognome, password); //controllo validità parametri in input
         this.nome = nome;
         this.cognome = cognome;
         this.id = UUID.randomUUID().toString();
@@ -30,7 +30,7 @@ public abstract class Utente {  //08.29 modificata in classe astratta
         }
     }
 
-    // Getters e Setter (questo solo di password x aggiornarla) -------------------------------------------------------------
+    // Getters e Setter
     public String getNome() {
         return nome;
     }
@@ -50,16 +50,13 @@ public abstract class Utente {  //08.29 modificata in classe astratta
     public String getPassword() {
         return password;
     }
-    // 29.08 rimosso da utente perchè serve solo a Cliente ora?!?!
-    //30.07 Modificato in modo che restituisca lista prodotti carrello dell'utente
 
-    // Gestione apposita per dato password
-    // Non viene mostrata direttamente la password
+    // Gestione apposita per dato password, non viene mostrata direttamente la password
     public boolean verificaPassword(String password) {
         return this.password.equals(password);
     }
 
-    // Setter per per eventualmente aggiornare la password
+    // Setter per eventualmente aggiornare la password
     public void aggiornaPassword(String nuovaPassword) {
         if (nuovaPassword == null || nuovaPassword.trim().isEmpty()) {
             throw new IllegalArgumentException("La nuova password non può essere nulla o vuota.");
@@ -67,7 +64,7 @@ public abstract class Utente {  //08.29 modificata in classe astratta
         this.password = nuovaPassword;
     }
 
-    //30.07 Metodi per controllare ruolo dell'utente // 29.08 saranno definiti nelle sottoclassi
+    //Metodi per controllare ruolo dell'utente, saranno definiti nelle sottoclassi
     public abstract boolean isGestore();
 
     public abstract boolean isCliente();

@@ -50,6 +50,4 @@ public class Gestore extends Utente {
     public List<Prodotto> ricercaProdottiPerTipo(TipologiaDispositivoElettronico tipo) {
         return magazzino.ricercaPerTipo(tipo);
     }
-
-    //04.09 Mancano altri metodi di gestione? controllare
 }

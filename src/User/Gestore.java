@@ -13,6 +13,10 @@ public class Gestore extends Utente {
         this.magazzino = new Magazzino();
     }
 
+    public Magazzino getMagazzino() {
+        return magazzino;
+    }
+
 
     @Override
     public boolean isGestore() {

@@ -53,12 +53,14 @@ public class Main {
 
         }catch (IOException ioException){
             System.out.println(ioException.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
 
     }
 
-    public static void menuCliente(Scanner scanner,Utente utente){
+    public static void menuCliente(Scanner scanner,Utente utente) throws InterruptedException {
         System.out.println(
                 "\nMenù principale (Cliente): \n" +
                         "\n1.    Gestisci carrello (-> Più opzioni) " +
@@ -74,7 +76,7 @@ public class Main {
         scanner.close();
     }
 
-    public static void registerOrLoginMenu(int scelta, Scanner scanner, Magazzino magazzino) throws IOException {
+    public static void registerOrLoginMenu(int scelta, Scanner scanner, Magazzino magazzino) throws IOException, InterruptedException {
         switch (scelta){
             case 1 -> register(scanner);
             case 2 -> {
@@ -131,7 +133,7 @@ public class Main {
     }
 
 
-    public static void gestireCarello(Scanner scanner, Cliente cliente){
+    public static void gestireCarello(Scanner scanner, Cliente cliente) throws InterruptedException {
 
 
         boolean isInMenu = true;
@@ -155,6 +157,18 @@ public class Main {
                 }
                 case 4 -> System.out.println("Spesa totale: " + cliente.calcolaTotaleCarrello());
                 case 5 -> {
+                    Thread.sleep(1000);
+                    System.out.println("Prodotti nel carrello:");
+                    Thread.sleep(50);
+                    cliente.visualizzaCarrello();
+                    Thread.sleep(1000);
+                    System.out.println("");
+                    System.out.println("Prezzo totale: " + cliente.calcolaTotaleCarrello());
+                    Thread.sleep(1000);
+                    System.out.println("");
+                    System.out.println("Acquisto Completato! Grazie!");
+                    cliente.svuotaCarrello();
+                    Thread.sleep(1000);
                     menuCliente(scanner,cliente);
                 }
             }

@@ -59,6 +59,9 @@ public class Cliente extends Utente {
     public double calcolaTotaleCarrello() {
         return carrelloUtente.calcolaTotale();
     }
+    public void svuotaCarrello() {
+        carrelloUtente.svuotaCarrello();
+    }
 
     public void finalizzaAcquisto() {
         double totale = calcolaTotaleCarrello();

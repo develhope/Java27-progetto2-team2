@@ -74,6 +74,7 @@ public class Carrello {
         prodotti.clear();
     }
 
+
     @Override
     public String toString() {
         return "Carrello.Carrello{" +

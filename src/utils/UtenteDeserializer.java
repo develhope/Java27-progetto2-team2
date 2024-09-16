@@ -17,6 +17,6 @@ public class UtenteDeserializer implements JsonDeserializer<Utente> {
         String password = jsonObject.get("password").getAsString();
 
         // Use the factory to create the appropriate Utente instance
-        return UtenteFactory.createUtente(nome, cognome, id, password, ruolo);
+        return UtenteFactory.createUtente(nome, cognome, password, ruolo);
     }
 }

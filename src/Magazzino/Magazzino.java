@@ -1,5 +1,6 @@
 package Magazzino;
 
+import Product.DispositivoElettronico;
 import Product.Prodotto;
 import Product.TipologiaDispositivoElettronico;
 
@@ -25,7 +26,10 @@ public class Magazzino {
      * @return ritorna la lista dei prodotti filtrata
      */
     public List<Prodotto> ricercaPerTipo(TipologiaDispositivoElettronico tipologia){
-        return listaProdotti.stream().filter(prodotto -> prodotto.getTipoProdotto().equals(tipologia)).toList();
+        return listaProdotti.stream()
+                .filter(prodotto -> prodotto instanceof DispositivoElettronico &&
+                        ((DispositivoElettronico) prodotto).getTipologia().equals(tipologia))
+                .toList();
     }
 
     /***
